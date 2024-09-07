@@ -95,3 +95,4 @@ Copy the test file and program file for part 1 to the test file and program file
 
 - Add a fill command, to pre-fill a program
 - Organize the code into more files
+- Better argument gestion
