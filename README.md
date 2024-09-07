@@ -102,6 +102,6 @@ Copy the test file and program file for part 1 to the test file and program file
 
 ## TODO
 
-- Add a fill command, to pre-fill a program
+- Automatically fetch tests in the aoc problem page. 
 - Organize the code into more files
 - Better argument gestion
