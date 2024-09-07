@@ -53,6 +53,8 @@ def update_environment(file_path: str, variable: str, value: str) -> None:
 env_path = ".env"
 environ = load_environment(env_path)
 
+def is_file_empty(file_path: str) -> bool:
+    return (not os.path.isfile(part2_path)) or os.path.getsize(part2_path) == 0
 
 
 ######################
@@ -118,14 +120,26 @@ part2_path = os.path.join(day_path, "part2.py")
 test1_path = os.path.join(day_path, "test1.txt")
 test2_path = os.path.join(day_path, "test2.txt")
 
+# Get right level
+level = 1
+if not is_file_empty(part2_path):
+    level = 2
+    
+if "-l" in options:
+    is_error = False
+    try:
+        level = int(options["-l"])
+    except ValueError:
+        is_error = True
+    if is_error or level <= 0 or level > 2:
+        print("Error in argument: the day option should be an integer between 1 and 31.", file=sys.stderr)
+        exit(1)
+
 
 
 #############
 # Functions #
 #############
-
-def is_file_empty(file_path: str) -> bool:
-    return (not os.path.isfile(part2_path)) or os.path.getsize(part2_path) == 0
 
 def prep():
     """Prepare the files for the wanted day."""
@@ -139,8 +153,10 @@ def prep():
         open(part1_path, 'a').close()
     if not os.path.isfile(part2_path):
         open(part2_path, 'a').close()
-    if not os.path.isfile(test_path):
-        open(test_path, 'a').close()
+    if not os.path.isfile(test1_path):
+        open(test1_path, 'a').close()
+    if not os.path.isfile(test2_path):
+        open(test2_path, 'a').close()
 
 def init():
     """Fetch the input from Advent Of Code site."""
@@ -150,7 +166,7 @@ def init():
         f.write(r.text)
 
 
-def test(level: int) -> bool:
+def test() -> bool:
     """Run all the tests present in the test file."""
     # Get the right paths
     part_path = part1_path if level == 1 else part2_path
@@ -193,13 +209,13 @@ def test(level: int) -> bool:
             res = False
             print(f"Test {i}: FAILED")
             print(f"Expected value:\n{out}")
-            print(f"Response gotten:\n{response}")
+            print(f"Response gotten:\n{response}\n")
     os.remove("input.temp")
     os.remove("output.temp")
     return res
 
 
-def execute(level: int):
+def execute():
     """Run the program with the input, and submit the answer."""
 
     # Run the right program, and get the answer
@@ -265,20 +281,14 @@ elif command == "init":
     prep()
     init()
 elif command == "test":
-    level = 1
-    if not is_file_empty(part2_path):
-        level = 2
-    test(level)
+    test()
 elif command == "exec":
-    level = 1
-    if not is_file_empty(part2_path):
-        level = 2
-    if test(level):
-        execute(level)
+    if test():
+        execute()
 elif command == "copy":
     copy()
-elif command == "fill":
-    fill()
+#elif command == "fill":
+#    fill()
 elif command == "set-session":
     set_session()
 else:
