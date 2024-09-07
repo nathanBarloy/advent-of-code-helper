@@ -26,6 +26,8 @@ The available commands are the following ones:
     Run the tests in the test files. If they all succeed, run the program on the input, and send the answer to the Adventof Code site.
 - [`copy`](#copy):  
     Copy the test file and the program of the first part into the test file and the program of the second part.
+- [`fill`](#fill):  
+    Copy the test file and the program of the first part into the test file and the program of the second part.
 
 The available options are the following ones:
 - `-y [year]`:  
@@ -98,6 +100,14 @@ Run the [test](#test) command first and if all the tests are successful, it will
 `python3 aoc.py prep [-y [year]] [-d [day]]`
 
 Copy the test file and program file for part 1 to the test file and program file for part 2. If thoses files aren't empty, a backup file will be created.
+
+
+### fill
+
+`python3 aoc.py fill [template_file] [-y [year]] [-d [day]]`
+
+Copy the template file to the program file for part 1. If this files isn't empty, a backup file will be created.  
+By default, the template file will be *templates/template.py*.
 
 
 ## TODO
