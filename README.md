@@ -16,8 +16,10 @@ The available commands are the following ones:
     Set the session cookie for the Advent of Code site.
 - [`prep`](#prep):  
     Create all the necessary files.
+- [`fetch`](#fetch):  
+    Create all the necessary files.
 - [`init`](#init):  
-    Create the necessary files, and fetch the inputs.
+    Call `prep` then `fetch`.
 - [`test`](#test):  
     Run all the tests in the test file.
 - [`exec`](#exec):  
@@ -48,6 +50,13 @@ You can get this session cookie by inspecting the [Advent of Code](https://adven
 Create the necessary files for the specified day.
 
 If you want to get the input immediatly, use the [init](#init) command instead.
+
+
+### fetch
+
+`python3 aoc.py fetch [-y [year]] [-d [day]]`
+
+Fetch your input for the specified day.
 
 
 ### init
@@ -96,4 +105,3 @@ Copy the test file and program file for part 1 to the test file and program file
 - Add a fill command, to pre-fill a program
 - Organize the code into more files
 - Better argument gestion
-- Ask to copy the part 1 to part 2 right after the submission for part 1 is ok

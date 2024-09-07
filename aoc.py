@@ -3,7 +3,7 @@ import os
 import shutil
 from datetime import date
 import requests
-from aocHtmlParser import AocHtmlParser
+from aocHtmlParser import AocHtmlParser, AocStatus
 
 
 #####################
@@ -158,7 +158,7 @@ def prep():
     if not os.path.isfile(test2_path):
         open(test2_path, 'a').close()
 
-def init():
+def fetch():
     """Fetch the input from Advent Of Code site."""
     input_url = "https://adventofcode.com/" + str(year) + "/day/" + str(day) + "/input"
     r = requests.get(input_url, cookies={"session": environ["SESSION"]})
@@ -215,7 +215,7 @@ def test() -> bool:
     return res
 
 
-def execute():
+def execute() -> bool:
     """Run the program with the input, and submit the answer."""
 
     # Run the right program, and get the answer
@@ -234,11 +234,13 @@ def execute():
                       data={"level":str(level), "answer":str(answer)})
     if (r.status_code != 200):
         print(f"The submission request came back with the code {r.status_code}.")
-        return
+        return False
     
     parser = AocHtmlParser()
     parser.feed(r.text)
     print(parser.message) 
+
+    return parser.status == AocStatus.OK
 
 
 
@@ -277,14 +279,24 @@ def set_session():
 
 if command == "prep":
     prep()
+elif command == "fetch":
+    fetch()
 elif command == "init":
     prep()
-    init()
+    fetch()
 elif command == "test":
     test()
 elif command == "exec":
     if test():
-        execute()
+        if execute():
+            if level == 1:
+                inp = input("Would you like to copy your part 1 to your part 2? [y]/n:")
+                inp = inp.strip()
+                if inp == "" or inp == "y" or inp == "Y":
+                    copy()
+            else:
+                print("You have finished the day's problem!")
+            
 elif command == "copy":
     copy()
 #elif command == "fill":
