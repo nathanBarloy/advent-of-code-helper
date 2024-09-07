@@ -96,3 +96,4 @@ Copy the test file and program file for part 1 to the test file and program file
 - Add a fill command, to pre-fill a program
 - Organize the code into more files
 - Better argument gestion
+- Ask to copy the part 1 to part 2 right after the submission for part 1 is ok
