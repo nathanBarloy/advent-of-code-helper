@@ -7,6 +7,14 @@ from aocHtmlParser import AocHtmlParser, AocStatus
 
 
 #####################
+# Constant varibles #
+#####################
+
+DEFAULT_TEMPLATE_PATH = os.path.join("templates", "template.py")
+
+
+
+#####################
 # Environment setup #
 #####################
 
@@ -55,6 +63,7 @@ environ = load_environment(env_path)
 
 def is_file_empty(file_path: str) -> bool:
     return (not os.path.isfile(part2_path)) or os.path.getsize(part2_path) == 0
+
 
 
 ######################
@@ -264,6 +273,26 @@ def copy():
         shutil.copyfile(test1_path, test2_path)
 
 
+def fill():
+    """Fill the program with the given (or default) template.
+    If needed, a backup of the second part will be made.
+    """
+    template_path = DEFAULT_TEMPLATE_PATH
+    if len(parameters) > 0:
+        template_path = parameters[0]
+    # the template must exist
+    if not os.path.isfile(template_path):
+        raise ValueError("The template doesn't exist.")
+
+    # Create backup if needed
+    if not is_file_empty(part1_path):
+        shutil.copyfile(part1_path, os.path.join(day_path, "part1_backup.py"))
+    
+    # Copy the files
+    shutil.copyfile(template_path, part1_path)
+
+    
+
 
 def set_session():
     if len(parameters) == 0:
@@ -299,8 +328,8 @@ elif command == "exec":
             
 elif command == "copy":
     copy()
-#elif command == "fill":
-#    fill()
+elif command == "fill":
+    fill()
 elif command == "set-session":
     set_session()
 else:
