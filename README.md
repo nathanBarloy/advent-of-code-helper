@@ -63,14 +63,14 @@ Fetch your input for the specified day.
 
 ### init
 
-`python3 aoc.py prep [-y [year]] [-d [day]]`
+`python3 aoc.py init [-y [year]] [-d [day]]`
 
 Create the necessary files for the specified day, and fetch the input from the Advent of Code site.
 
 
 ### test
 
-`python3 aoc.py prep [-y [year]] [-d [day]] [-l [level]]`
+`python3 aoc.py test [-y [year]] [-d [day]] [-l [level]]`
 
 Run all the tests in the test file. The test file must have this format:
 
@@ -90,14 +90,14 @@ output:
 
 ### exec
 
-`python3 aoc.py prep [-y [year]] [-d [day]] [-l [level]]`
+`python3 aoc.py exec [-y [year]] [-d [day]] [-l [level]]`
 
 Run the [test](#test) command first and if all the tests are successful, it will run the program on the input file then submit the answer to (adventofcode.com)[https://adventofcode.com].
 
 
 ### copy
 
-`python3 aoc.py prep [-y [year]] [-d [day]]`
+`python3 aoc.py copy [-y [year]] [-d [day]]`
 
 Copy the test file and program file for part 1 to the test file and program file for part 2. If thoses files aren't empty, a backup file will be created.
 
@@ -112,6 +112,7 @@ By default, the template file will be *templates/template.py*.
 
 ## TODO
 
-- Automatically fetch tests in the aoc problem page. 
+- Automatically fetch tests in the aoc problem page
 - Organize the code into more files
 - Better argument gestion
+- Add simple exemple usage
