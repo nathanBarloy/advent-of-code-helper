@@ -1,6 +1,7 @@
 import sys
 import os
 import shutil
+import argparse
 from datetime import date
 import requests
 from aocHtmlParser import AocHtmlParser, AocStatus
@@ -172,7 +173,7 @@ def fetch():
     input_url = "https://adventofcode.com/" + str(year) + "/day/" + str(day) + "/input"
     r = requests.get(input_url, cookies={"session": environ["SESSION"]})
     with open(input_path, "w") as f:
-        f.write(r.text)
+        f.write(r.text.strip())
 
 
 def test() -> bool:
@@ -200,12 +201,13 @@ def test() -> bool:
             input_file.write(inp)
 
         # call the program, and manage the return status
-        status = os.system(f"python3 {part_path} < input.temp > output.temp 2> output.temp")
+        status = os.system(f"python3 {part_path} < input.temp > output.temp 2> error.temp")
         if not (os.WIFEXITED(status) and (os.WEXITSTATUS(status)==0)):
-            with open("output.temp") as output_file:
-                print(f"ERROR while in test {i}:\n\n{output_file.read().strip()}")
+            with open("output.temp") as output_file, open("error.temp") as error_file:
+                print(f"{output_file.read()}\nERROR while in test {i}:\n\n{error_file.read().strip()}")
             os.remove("input.temp")
             os.remove("output.temp")
+            os.remove("error.temp")
             return False
 
         # Get and check the answer
