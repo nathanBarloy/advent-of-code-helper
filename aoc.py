@@ -215,10 +215,10 @@ def test() -> bool:
         with open("output.temp") as output_file:
             response = output_file.read().strip()
         if response == out:
-            print(f"Test {i}: SUCCES")
+            print(f"Test {i}: \033[92mSUCCES\033[0m")
         else:
             res = False
-            print(f"Test {i}: FAILED")
+            print(f"Test {i}: \033[91mFAILED\033[0m")
             print(f"Expected value:\n{out}")
             print(f"Response gotten:\n{response}\n")
     os.remove("input.temp")
