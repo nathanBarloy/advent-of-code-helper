@@ -1,6 +1,7 @@
 
 # Input files must NOT be included in a github repo
-*/input.txt
+**/input.txt
+**/test?.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
