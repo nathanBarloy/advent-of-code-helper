@@ -185,10 +185,9 @@ def test() -> bool:
     # create a list of inputs
     inputs = []
     with open(test_path) as test_file:
-        for test_case in test_file.read().strip().split('\n\n'):
+        for test_case in test_file.read().strip().split('input:\n')[1:]:
             inp, out = test_case.split("\noutput:\n")
-            assert(inp.startswith("input:\n"))
-            inp = inp[7:].strip()
+            inp = inp.strip()
             out = out.strip()
             inputs.append([inp, out])
     
