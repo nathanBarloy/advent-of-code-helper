@@ -63,7 +63,7 @@ env_path = ".env"
 environ = load_environment(env_path)
 
 def is_file_empty(file_path: str) -> bool:
-    return (not os.path.isfile(part2_path)) or os.path.getsize(part2_path) == 0
+    return (not os.path.isfile(file_path)) or os.path.getsize(file_path) == 0
 
 
 
@@ -181,6 +181,9 @@ def test() -> bool:
     # Get the right paths
     part_path = part1_path if level == 1 else part2_path
     test_path = test1_path if level == 1 else test2_path
+
+    if is_file_empty(test_path):
+        return True
 
     # create a list of inputs
     inputs = []
