@@ -78,39 +78,54 @@ with open(0) as f:
     full = False
     id_ = 0
     memory = []
-    for c in f.read().strip():
+    emptys = []
+    files = []
+    pos = 0
+    for i, c in enumerate(f.read().strip()):
         full = not full
         size = int(c)
         if full:
+            files.append((pos, size))
             for _ in range(size):
                 memory.append(id_)
             id_ += 1
 
         else:
+            emptys.append((pos, size))
             for _ in range(size):
                 memory.append(-1)
+        
+        pos += size
     
-    empty_pos = 0
-    while memory[empty_pos] >= 0:
-        empty_pos += 1
-    
-    full_pos = len(memory)-1
-    while memory[full_pos] < 0:
-        full_pos -= 1
+    for file in files[::-1]:
+        #print("".join(map(lambda x: str(x) if x >= 0 else '.', memory)))
+        # find hole of good size
+        i = 0
+        while i < len(emptys) and emptys[i][1] < file[1]:
+            i += 1
+        if i == len(emptys) or file[0] < emptys[i][0]:
+            continue
+        
+        # Move file in memory
+        id_ = memory[file[0]]
+        for k in range(file[1]):
+            memory[emptys[i][0]+k] = id_
+        for k in range(file[1]):
+            memory[file[0]+k] = -1
+        
+        # change empty object
+        if emptys[i][1] == file[1]:
+            emptys.pop(i)
+        else:
+            emptys[i] = (emptys[i][0] + file[1], emptys[i][1] - file[1])
 
-    while empty_pos < full_pos:
-        memory[empty_pos] = memory[full_pos]
-        memory[full_pos] = -1
-        while memory[empty_pos] >= 0:
-            empty_pos += 1
-        while memory[full_pos] < 0:
-            full_pos -= 1
+
     
     check = 0
-    i = 0
-    while memory[i] >= 0:
-        check += i*memory[i]
-        i += 1
+    for i, x in enumerate(memory):
+        if x < 0:
+            continue
+        check += i*x
     print(check)
 
 
